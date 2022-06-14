@@ -1,0 +1,82 @@
+@{ Layout = "~/Views/Shared/_lightLayout.cshtml"; }
+@model LoginViewModel
+@using (Html.BeginForm())
+{
+
+
+    <table style="width: 310px;" align="center">
+        <tr>
+            <td class="form-layout">
+                @Html.DevExpress().FormLayout(settings =>
+           {
+               settings.Name = "loginFormLayout";
+               settings.Styles.LayoutItem.Paddings.Padding = 0;
+               settings.Styles.LayoutItem.Paddings.PaddingTop = 2;
+               CommonHelper.ApplyCommonSettings<LoginViewModel>(settings);
+               var groupItem = settings.Items.AddGroupItem();
+               groupItem.Items.Add(i => i.NestedExtension().Image(s =>
+               {
+                   i.ShowCaption = DefaultBoolean.False;
+                   s.Width = Unit.Pixel(168);
+                   s.Height = Unit.Pixel(60);
+                   s.ImageUrl = "~/Content/Images/pass-logo.png";
+               }));
+
+               groupItem.Items.Add(m => Model.UserName, i => i.NestedExtension().TextBox(s =>
+               {
+                   s.Name = "UserName";
+                    s.Width = Unit.Percentage(100);
+                   s.ShowModelErrors = true;
+                   s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   s.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+               }));
+               groupItem.Items.Add(m => Model.Password, i => i.NestedExtension().TextBox(s =>
+               {
+                   s.Name = "Password";
+                   s.Width = Unit.Percentage(100);
+                   s.Properties.Password = true;
+                   s.ShowModelErrors = true;
+                   s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                   s.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+               }));
+
+               groupItem.Items.Add(i =>
+               {
+                   i.ShowCaption = DefaultBoolean.False;
+                   i.Width = Unit.Percentage(100);
+                   i.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+                   i.Paddings.PaddingTop = 0;
+               }).SetNestedContent(() =>
+               {
+                   ViewContext.Writer.Write("<table style=\"width:100%;\">" +
+                                            "<tr><td class=\"login-validation\"> " + @Html.ValidationMessage("ValidationMessage") + "</td></tr>" +
+                                            "<tr><td class=\"login-form-layout\">");
+
+                   Html.DevExpress().Button(s =>
+                   {
+                       s.Name = "Login";
+                       s.Width = Unit.Pixel(100);
+                       s.Text = "Einloggen";
+                       s.UseSubmitBehavior = true;
+                       s.Style["margin-top"] = "10px";
+                   }).Render();
+
+                   ViewContext.Writer.Write("</td></tr></table>");
+               });
+
+               groupItem.Paddings.PaddingTop = 0;
+               groupItem.Paddings.PaddingRight = 0;
+               groupItem.GroupBoxDecoration = GroupBoxDecoration.Box;
+               groupItem.ShowCaption = DefaultBoolean.False;
+               groupItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+               groupItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Left;
+               groupItem.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+               groupItem.SettingsItemCaptions.VerticalAlign = FormLayoutVerticalAlign.Top;
+               groupItem.SettingsItemHelpTexts.Position = HelpTextPosition.Auto;
+               groupItem.SettingsItemHelpTexts.HorizontalAlign = HelpTextHorizontalAlign.Auto;
+               groupItem.SettingsItemHelpTexts.VerticalAlign = HelpTextVerticalAlign.Auto;
+           }).GetHtml()
+            </td>
+        </tr>
+    </table>
+}

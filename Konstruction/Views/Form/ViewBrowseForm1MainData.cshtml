@@ -1,0 +1,223 @@
+@model KundenTeileNrFormViewModel
+<table style="width: 100%;">
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Kunden Zg Nr:";
+                settings.AssociatedControlName = "KZgNr";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value" >
+            @Html.DevExpress().TextBox(
+            settings =>
+            {
+                CommonHelper.ApplyTextBoxReadonlySettings(settings);
+                settings.Name = "KZgNr";
+                settings.Width = Unit.Percentage(100);
+                settings.ControlStyle.CssClass = "editor";
+                settings.Text = Model.KZgNr;
+            }).GetHtml()
+        </td>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "PASS PDB Nr:";
+                settings.AssociatedControlName = "PassPdbNr";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value" >
+            @Html.DevExpress().TextBox(
+            settings =>
+            {
+                CommonHelper.ApplyTextBoxReadonlySettings(settings);
+                settings.Name = "PassPdbNr";
+                settings.Width = Unit.Percentage(100);
+                settings.ControlStyle.CssClass = "editor";
+                settings.Text = Model.PassPdbNr;
+            }).GetHtml()
+        </td>
+     
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Bezeichnung:";
+                settings.AssociatedControlName = "KZgBz";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value" colspan="3">
+            @Html.DevExpress().TextBox(
+          settings =>
+          {
+              CommonHelper.ApplyTextBoxReadonlySettings(settings);
+              settings.Name = "KZgBz";
+              settings.Width = Unit.Percentage(100);
+              settings.ControlStyle.CssClass = "editor";
+              settings.Text = Model.KZgBz;
+          }).GetHtml()
+
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Zg Datum:";
+                settings.AssociatedControlName = "KZgDate";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+          settings =>
+          {
+              CommonHelper.ApplyTextBoxReadonlySettings(settings);
+              settings.Name = "KZgDate";
+              settings.Width = Unit.Percentage(100);
+              settings.ControlStyle.CssClass = "editor";
+              if (Model.KZgDate.HasValue)
+                  settings.Text = Model.KZgDate.Value.ToString("d");
+          } ).GetHtml()
+        </td>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Daten Stand:";
+                settings.AssociatedControlName = "Pdastand";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+          settings =>
+          {
+              CommonHelper.ApplyTextBoxReadonlySettings(settings);
+              settings.Name = "Pdastand";
+              settings.Width = Unit.Percentage(100);
+              settings.ControlStyle.CssClass = "editor";
+              settings.Text = Model.Pdastand;
+          } ).GetHtml()
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+              settings =>
+              {
+                  settings.ControlStyle.CssClass = "label";
+                  settings.Text = "Datenformat:";
+                  settings.AssociatedControlName = "Datenformat";
+              }
+          ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+            settings =>
+            {
+                CommonHelper.ApplyTextBoxReadonlySettings(settings);
+                settings.Name = "Datenformat";
+                settings.Width = Unit.Percentage(100);
+                settings.ControlStyle.CssClass = "editor";
+                settings.Text = Model.Datenformat;
+            } ).GetHtml()
+        </td>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Ersteller:";
+                settings.Width = Unit.Percentage(100);
+                settings.AssociatedControlName = "Ersteller";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+     settings =>
+     {
+         CommonHelper.ApplyTextBoxReadonlySettings(settings);
+         settings.Name = "Ersteller";
+         settings.Width = Unit.Percentage(100);
+         settings.Text = Model.Ersteller;
+     }).GetHtml()
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Bemerkung:";
+                settings.AssociatedControlName = "ZgMemo";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value" colspan="3">
+            @Html.DevExpress().Memo(
+          settings =>
+          {
+              settings.Name = "ZgMemo";
+              settings.Width = Unit.Percentage(100);
+              settings.Height = Unit.Pixel(90);
+              settings.ControlStyle.CssClass = "editor";
+              settings.ReadOnly = true;
+              settings.Properties.ReadOnlyStyle.CssClass = "readonly";
+              settings.Properties.EnableFocusedStyle = false;
+              settings.Text = Model.ZgMemo;
+          } ).Bind(Model.ZgMemo).GetHtml()
+        </td>
+    </tr>
+</table>
+
+            @Html.DevExpress().Splitter(
+                  settings =>
+                  {
+                      settings.Name = "splResizing";
+                      settings.FullscreenMode = false;
+                      settings.Styles.Pane.Paddings.Padding = 0;
+                      settings.Style["margin-top"] = "15px";
+                      settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+                      settings.Width = Unit.Percentage(100);
+                      settings.ClientSideEvents.PaneResized = "PaneResized";
+                      settings.Panes.Add(gridPane =>
+                      {
+                          gridPane.Name = "grid1Container";
+                          gridPane.Size = Unit.Percentage(30);
+                          gridPane.MinSize = 100;
+                          gridPane.ScrollBars = ScrollBars.None;
+                          gridPane.SetContent(() =>
+                          {
+                              @Html.RenderPartial("~/Views/Form/Controls/BrowseForm1MainDataKundeZuweisungMainDataPartial.cshtml", Model);
+                          });
+                      });
+
+                      settings.Panes.Add(editorsPane =>
+                      {
+                          editorsPane.Name = "grid2Container";
+                          editorsPane.Size = Unit.Percentage(70);
+                          editorsPane.ShowCollapseForwardButton = DefaultBoolean.True;
+                          editorsPane.ScrollBars = System.Web.UI.WebControls.ScrollBars.None;
+                          editorsPane.SetContent(() =>
+                          {
+                              @Html.RenderPartial("~/Views/Form/Controls/BrowseForm1MainDataKundeZgRevisionPartial.cshtml", Model);
+                          });
+                      });
+                  }).GetHtml()
+

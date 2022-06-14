@@ -1,0 +1,37 @@
+@model KundenTeileNrFormViewModel
+
+    @Html.DevExpress().Splitter(
+  settings =>
+  {
+      settings.Name = "splResizing2";
+      settings.FullscreenMode = false;
+      settings.Styles.Pane.Paddings.Padding = 0;
+      settings.Styles.Pane.Border.BorderWidth = 0;
+      settings.Styles.Pane.BorderBottom.BorderWidth = 1;
+      settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+      settings.Width = Unit.Percentage(100);
+      settings.Panes.Add(gridPane =>
+      {
+          gridPane.Name = "grid3Container";
+          gridPane.Size = Unit.Percentage(50);
+          gridPane.MinSize = 50;
+          gridPane.ScrollBars = ScrollBars.Vertical;
+          gridPane.SetContent(() =>
+          {
+              @Html.RenderPartial("~/Views/Form/Controls/Form1KundeZuweisungZSBNrDataPartial.cshtml", Model);
+          });
+      });
+
+      settings.Panes.Add(editorsPane =>
+      {
+          editorsPane.Name = "grid4Container";
+    
+        //  editorsPane.ShowCollapseForwardButton = DefaultBoolean.True;
+          editorsPane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Vertical;
+          editorsPane.SetContent(() =>
+          {
+              @Html.RenderPartial("~/Views/Form/Controls/Form1PassKundeZuweisungZSBNrDataPartial.cshtml", Model);
+          });
+      });
+  }).GetHtml()
+

@@ -1,0 +1,64 @@
+@model Form2KundeZgRevisioNrData
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "viewForm2KundeZgRevision";
+        settings.KeyFieldName = "ID";
+        settings.CallbackRouteValues = new { Controller = "Form", Action = "Form1KundeZgRevisionPartial", SessionKey = Model.Key };
+        CommonHelper.ApplyCommonBatchEditSettings(settings);
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Form", Action = "Form1KundeZgRevisionSessionEdit", SessionKey = Model.Key };
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Action";
+            column.Caption = "Action";
+            column.Width = Unit.Pixel(30);
+            column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            column.Settings.AllowSort = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (c.VisibleIndex < 0)
+                    return;
+
+                int id = (int)DataBinder.Eval(c.DataItem, "ID");
+
+                ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"if(confirm('Wollen Sie wirklich diesen Datensatz löschen?')){ DeleteKundeZgRevision(" + id + "); } else { return false;} \" \">");
+                ViewContext.Writer.Write("<i class=\"fa fa-times fa-1x\" aria-hidden=\"true\" title=\"Löschen\" ></i></a>");
+
+            });
+
+            column.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"viewForm2KundeZgRevision.AddNewRow();\" \">");
+                ViewContext.Writer.Write("<i class=\"fa fa-plus fa-1x\" aria-hidden=\"true\" title=\"Neu\"></i></a>");
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            CommonHelper.ApplyDateCommonSettings(column,125);
+            column.FieldName = "RevDate";
+            column.Caption = "Datum";
+            column.CellStyle.Paddings.Padding = 5;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "RevRecord";
+            column.Caption = "Änderungsbeschreibung";
+            column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            column.CellStyle.Paddings.Padding = 5;
+            column.CellStyle.CssClass = "cell-wrap-text";
+            column.ColumnType = MVCxGridViewColumnType.Memo;
+            MemoProperties properties = column.PropertiesEdit as MemoProperties;
+            properties.Height = Unit.Pixel(50);
+
+        });
+        settings.ClientSideEvents.BeginCallback = "viewForm1KundeZgRevisionOnBeginCallback";
+        settings.ClientSideEvents.EndCallback = "viewForm1KundeZgRevisionOnEndCallback";
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.Dynamic;//or Display.None
+        };
+    }).Bind(Model.KundeZgRevisionData).GetHtml()

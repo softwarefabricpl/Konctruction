@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KonstructionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActiveDirectorySetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="DC" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DefaultLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DefaultPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Datenformat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="data_format" Type="varchar" MaxLength="10" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Einfügefehler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Feld0" Type="text" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ersteller">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Ersteller" Type="varchar" MaxLength="15" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kunde_zg_revision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="varchar" MaxLength="50" />
+          <Property Name="k_rev_date" Type="smalldatetime" />
+          <Property Name="k_lfd_nr" Type="varchar" MaxLength="2" />
+          <Property Name="k_rev_record" Type="text" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="k_zg_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Kunde_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_unter_zsb_zg_nr" Type="varchar" MaxLength="20" />
+          <Property Name="k_zg_nr" Type="varchar" MaxLength="20" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="k_unter_zsb_zg_id" Type="int" />
+          <Property Name="k_zg_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Kunden_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="varchar" MaxLength="36" />
+          <Property Name="k_zg_bz" Type="varchar" MaxLength="100" />
+          <Property Name="k_zg_date" Type="datetime" />
+          <Property Name="data_format" Type="varchar" MaxLength="100" />
+          <Property Name="k_zg_memo" Type="text" />
+          <Property Name="k_zg_status" Type="varchar" MaxLength="10" />
+          <Property Name="Ersteller" Type="varchar" MaxLength="30" />
+          <Property Name="k_zg_oz" Type="bit" Nullable="false" />
+          <Property Name="k_pda_stand" Type="varchar" MaxLength="10" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssignedOn" Type="datetime" />
+          <Property Name="AssignedTo" Type="varchar" MaxLength="100" />
+          <Property Name="PassPdbNr" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Last_Pass_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastPasTeileNr" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pass_Kunde_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="varchar" MaxLength="20" />
+          <Property Name="p_zg_nr" Type="varchar" MaxLength="18" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="k_zg_id" Type="int" />
+          <Property Name="p_zg_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Pass_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_zg_nr" Type="varchar" MaxLength="18" />
+          <Property Name="p_zg_bz" Type="varchar" MaxLength="70" />
+          <Property Name="p_zg_date" Type="smalldatetime" />
+          <Property Name="data_format" Type="varchar" MaxLength="50" />
+          <Property Name="p_zg_memo" Type="text" />
+          <Property Name="p_zg_oz" Type="bit" Nullable="false" />
+          <Property Name="p_zg_std" Type="bit" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssignedOn" Type="datetime" />
+          <Property Name="AssignedTo" Type="varchar" MaxLength="100" />
+          <Property Name="PassPdbNr" Type="nvarchar" MaxLength="12" />
+          <Property Name="Customer_Number" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Pass_zg_revision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_zg_nr" Type="varchar" MaxLength="18" />
+          <Property Name="p_rev_date" Type="smalldatetime" />
+          <Property Name="p_lfd_nr" Type="varchar" MaxLength="2" />
+          <Property Name="p_rev_record" Type="text" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_zg_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Pass_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_unter_zsb_zg_nr" Type="varchar" MaxLength="18" />
+          <Property Name="p_zg_nr" Type="varchar" MaxLength="18" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_unter_zsb_zg_id" Type="int" />
+          <Property Name="p_zg_id" Type="int" />
+        </EntityType>
+        <EntityContainer Name="KonstructionModelStoreContainer">
+          <EntitySet Name="ActiveDirectorySetting" EntityType="Self.ActiveDirectorySetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Datenformat" EntityType="Self.Datenformat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Einfügefehler" EntityType="Self.Einfügefehler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ersteller" EntityType="Self.Ersteller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kunde_zg_revision" EntityType="Self.Kunde_zg_revision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kunde_zuweisung_ZSB_Nr" EntityType="Self.Kunde_zuweisung_ZSB_Nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kunden_Teile_nr" EntityType="Self.Kunden_Teile_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Last_Pass_Teile_nr" EntityType="Self.Last_Pass_Teile_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pass_Kunde_zuweisung_ZSB_Nr" EntityType="Self.Pass_Kunde_zuweisung_ZSB_Nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pass_Teile_nr" EntityType="Self.Pass_Teile_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pass_zg_revision" EntityType="Self.Pass_zg_revision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pass_zuweisung_ZSB_Nr" EntityType="Self.Pass_zuweisung_ZSB_Nr" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KonstructionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KonstructionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActiveDirectorySetting" EntityType="KonstructionModel.ActiveDirectorySetting" />
+          <EntitySet Name="Datenformat" EntityType="KonstructionModel.Datenformat" />
+          <EntitySet Name="Einfügefehler" EntityType="KonstructionModel.Einfügefehler" />
+          <EntitySet Name="Ersteller" EntityType="KonstructionModel.Ersteller" />
+          <EntitySet Name="Kunde_zg_revision" EntityType="KonstructionModel.Kunde_zg_revision" />
+          <EntitySet Name="Kunde_zuweisung_ZSB_Nr" EntityType="KonstructionModel.Kunde_zuweisung_ZSB_Nr" />
+          <EntitySet Name="Kunden_Teile_nr" EntityType="KonstructionModel.Kunden_Teile_nr" />
+          <EntitySet Name="Last_Pass_Teile_nr" EntityType="KonstructionModel.Last_Pass_Teile_nr" />
+          <EntitySet Name="Pass_Kunde_zuweisung_ZSB_Nr" EntityType="KonstructionModel.Pass_Kunde_zuweisung_ZSB_Nr" />
+          <EntitySet Name="Pass_Teile_nr" EntityType="KonstructionModel.Pass_Teile_nr" />
+          <EntitySet Name="Pass_zg_revision" EntityType="KonstructionModel.Pass_zg_revision" />
+          <EntitySet Name="Pass_zuweisung_ZSB_Nr" EntityType="KonstructionModel.Pass_zuweisung_ZSB_Nr" />
+        </EntityContainer>
+        <EntityType Name="ActiveDirectorySetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="DC" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultLogin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Datenformat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="data_format" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Einfügefehler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Feld0" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Ersteller">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Ersteller1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Kunde_zg_revision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_rev_date" Type="DateTime" Precision="0" />
+          <Property Name="k_lfd_nr" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="k_rev_record" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="k_zg_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Kunde_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_unter_zsb_zg_nr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_nr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="k_unter_zsb_zg_id" Type="Int32" />
+          <Property Name="k_zg_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Kunden_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_bz" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_date" Type="DateTime" Precision="3" />
+          <Property Name="data_format" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Ersteller" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="k_zg_oz" Type="Boolean" Nullable="false" />
+          <Property Name="k_pda_stand" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssignedOn" Type="DateTime" Precision="3" />
+          <Property Name="AssignedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PassPdbNr" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Last_Pass_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastPasTeileNr" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pass_Kunde_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="k_zg_nr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_nr" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="k_zg_id" Type="Int32" />
+          <Property Name="p_zg_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Pass_Teile_nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_zg_nr" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_bz" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_date" Type="DateTime" Precision="0" />
+          <Property Name="data_format" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_oz" Type="Boolean" Nullable="false" />
+          <Property Name="p_zg_std" Type="Boolean" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssignedOn" Type="DateTime" Precision="3" />
+          <Property Name="AssignedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PassPdbNr" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Customer_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Pass_zg_revision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_zg_nr" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="p_rev_date" Type="DateTime" Precision="0" />
+          <Property Name="p_lfd_nr" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="p_rev_record" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_zg_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Pass_zuweisung_ZSB_Nr">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="p_unter_zsb_zg_nr" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="p_zg_nr" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_unter_zsb_zg_id" Type="Int32" />
+          <Property Name="p_zg_id" Type="Int32" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KonstructionModelStoreContainer" CdmEntityContainer="KonstructionEntities">
+          <EntitySetMapping Name="ActiveDirectorySetting">
+            <EntityTypeMapping TypeName="KonstructionModel.ActiveDirectorySetting">
+              <MappingFragment StoreEntitySet="ActiveDirectorySetting">
+                <ScalarProperty Name="DefaultPassword" ColumnName="DefaultPassword" />
+                <ScalarProperty Name="DefaultLogin" ColumnName="DefaultLogin" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="DC" ColumnName="DC" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Datenformat">
+            <EntityTypeMapping TypeName="KonstructionModel.Datenformat">
+              <MappingFragment StoreEntitySet="Datenformat">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="data_format" ColumnName="data_format" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Einfügefehler">
+            <EntityTypeMapping TypeName="KonstructionModel.Einfügefehler">
+              <MappingFragment StoreEntitySet="Einfügefehler">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Feld0" ColumnName="Feld0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ersteller">
+            <EntityTypeMapping TypeName="KonstructionModel.Ersteller">
+              <MappingFragment StoreEntitySet="Ersteller">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ersteller1" ColumnName="Ersteller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kunde_zg_revision">
+            <EntityTypeMapping TypeName="KonstructionModel.Kunde_zg_revision">
+              <MappingFragment StoreEntitySet="Kunde_zg_revision">
+                <ScalarProperty Name="k_zg_id" ColumnName="k_zg_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="k_rev_record" ColumnName="k_rev_record" />
+                <ScalarProperty Name="k_lfd_nr" ColumnName="k_lfd_nr" />
+                <ScalarProperty Name="k_rev_date" ColumnName="k_rev_date" />
+                <ScalarProperty Name="k_zg_nr" ColumnName="k_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kunde_zuweisung_ZSB_Nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Kunde_zuweisung_ZSB_Nr">
+              <MappingFragment StoreEntitySet="Kunde_zuweisung_ZSB_Nr">
+                <ScalarProperty Name="k_zg_id" ColumnName="k_zg_id" />
+                <ScalarProperty Name="k_unter_zsb_zg_id" ColumnName="k_unter_zsb_zg_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="k_zg_nr" ColumnName="k_zg_nr" />
+                <ScalarProperty Name="k_unter_zsb_zg_nr" ColumnName="k_unter_zsb_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kunden_Teile_nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Kunden_Teile_nr">
+              <MappingFragment StoreEntitySet="Kunden_Teile_nr">
+                <ScalarProperty Name="PassPdbNr" ColumnName="PassPdbNr" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="AssignedOn" ColumnName="AssignedOn" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="k_pda_stand" ColumnName="k_pda_stand" />
+                <ScalarProperty Name="k_zg_oz" ColumnName="k_zg_oz" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+                <ScalarProperty Name="k_zg_status" ColumnName="k_zg_status" />
+                <ScalarProperty Name="k_zg_memo" ColumnName="k_zg_memo" />
+                <ScalarProperty Name="data_format" ColumnName="data_format" />
+                <ScalarProperty Name="k_zg_date" ColumnName="k_zg_date" />
+                <ScalarProperty Name="k_zg_bz" ColumnName="k_zg_bz" />
+                <ScalarProperty Name="k_zg_nr" ColumnName="k_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Last_Pass_Teile_nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Last_Pass_Teile_nr">
+              <MappingFragment StoreEntitySet="Last_Pass_Teile_nr">
+                <ScalarProperty Name="LastPasTeileNr" ColumnName="LastPasTeileNr" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pass_Kunde_zuweisung_ZSB_Nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Pass_Kunde_zuweisung_ZSB_Nr">
+              <MappingFragment StoreEntitySet="Pass_Kunde_zuweisung_ZSB_Nr">
+                <ScalarProperty Name="p_zg_id" ColumnName="p_zg_id" />
+                <ScalarProperty Name="k_zg_id" ColumnName="k_zg_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="p_zg_nr" ColumnName="p_zg_nr" />
+                <ScalarProperty Name="k_zg_nr" ColumnName="k_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pass_Teile_nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Pass_Teile_nr">
+              <MappingFragment StoreEntitySet="Pass_Teile_nr">
+                <ScalarProperty Name="Customer_Number" ColumnName="Customer_Number" />
+                <ScalarProperty Name="PassPdbNr" ColumnName="PassPdbNr" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="AssignedOn" ColumnName="AssignedOn" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="p_zg_std" ColumnName="p_zg_std" />
+                <ScalarProperty Name="p_zg_oz" ColumnName="p_zg_oz" />
+                <ScalarProperty Name="p_zg_memo" ColumnName="p_zg_memo" />
+                <ScalarProperty Name="data_format" ColumnName="data_format" />
+                <ScalarProperty Name="p_zg_date" ColumnName="p_zg_date" />
+                <ScalarProperty Name="p_zg_bz" ColumnName="p_zg_bz" />
+                <ScalarProperty Name="p_zg_nr" ColumnName="p_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pass_zg_revision">
+            <EntityTypeMapping TypeName="KonstructionModel.Pass_zg_revision">
+              <MappingFragment StoreEntitySet="Pass_zg_revision">
+                <ScalarProperty Name="p_zg_id" ColumnName="p_zg_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="p_rev_record" ColumnName="p_rev_record" />
+                <ScalarProperty Name="p_lfd_nr" ColumnName="p_lfd_nr" />
+                <ScalarProperty Name="p_rev_date" ColumnName="p_rev_date" />
+                <ScalarProperty Name="p_zg_nr" ColumnName="p_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pass_zuweisung_ZSB_Nr">
+            <EntityTypeMapping TypeName="KonstructionModel.Pass_zuweisung_ZSB_Nr">
+              <MappingFragment StoreEntitySet="Pass_zuweisung_ZSB_Nr">
+                <ScalarProperty Name="p_zg_id" ColumnName="p_zg_id" />
+                <ScalarProperty Name="p_unter_zsb_zg_id" ColumnName="p_unter_zsb_zg_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="p_zg_nr" ColumnName="p_zg_nr" />
+                <ScalarProperty Name="p_unter_zsb_zg_nr" ColumnName="p_unter_zsb_zg_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

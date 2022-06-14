@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu>
+  <item Text="PASS Teil Nr" NavigateUrl="/Form/Form2Index" />
+    <item Text="Kunden Teil Nr" NavigateUrl="/Form/Form1Index" />
+</menu>

@@ -1,0 +1,288 @@
+@model PassTeileNrFormViewModel
+@{
+    System.Globalization.CultureInfo newCulture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
+    newCulture.NumberFormat.NumberGroupSeparator = ".";
+    newCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+    System.Threading.Thread.CurrentThread.CurrentCulture = newCulture;
+    System.Threading.Thread.CurrentThread.CurrentUICulture = newCulture;
+}
+@if (Model.AssignedOn.HasValue && Model.UserInfo.UserName.ToLower() != Model.AssignedTo.ToLower())
+{
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 100%; vertical-align: middle;" colspan="2">
+                <div class="info-header">
+                    @Html.DevExpress().Label(
+          settings =>
+          {
+              settings.ControlStyle.CssClass = "label";
+              settings.Text = "Dieser Datensatz wird von b bearbeitet und ist daher gesperrt, Sie können die Bearbeitung jedoch übernehmen.";
+              settings.ControlStyle.ForeColor = System.Drawing.Color.Red;
+              settings.ControlStyle.Font.Size = FontUnit.Medium;
+              settings.Style["margin-left"] = "5px";
+              settings.Style["margin-top"] = "4px";
+              settings.Height = Unit.Pixel(20);
+          }).GetHtml()
+
+                    @Html.DevExpress().Button(
+           settings =>
+           {
+               settings.Name = "btnTakeover";
+               settings.ControlStyle.CssClass = "button";
+               settings.Text = "Bearbeitung übernehmen";
+               settings.ClientSideEvents.Click = "function(s, e){Takeover();}";
+               settings.Style["float"] = "right";
+               settings.Style["margin-right"] = "3px";
+               settings.Style["margin-top"] = "2px";
+               settings.Height = Unit.Pixel(25);
+               settings.ControlStyle.BackColor = System.Drawing.Color.Green;
+           }).GetHtml()
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    Html.RenderPartial("ViewBrowseForm2MainData");
+}
+else
+{
+<table style="width: 100%;">
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+         settings =>
+         {
+             settings.ControlStyle.CssClass = "label";
+             settings.Text = "Suche:";
+             settings.AssociatedControlName = "CbPassTeileNr";
+         }
+     ).GetHtml()
+        </td>
+        <td class="value" style="width:40%;">
+            @{
+                Html.RenderPartial("~/Views/Form/Controls/PassTeileNrComboboxPartial.cshtml");
+            }
+        </td>
+        <td class="label"></td>
+        <td class="value" style="width:40%;"></td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+         settings =>
+         {
+             settings.ControlStyle.CssClass = "label";
+             settings.Text = "Pass Zg Nr:";
+             settings.AssociatedControlName = "ZgNr";
+
+         }
+     ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+         settings =>
+         {
+             settings.Name = "ZgNr";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "editor";
+             settings.ShowModelErrors = true;
+             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+             settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+         }).Bind(Model.ZgNr).GetHtml()
+        </td>
+
+        <td class="label">
+            @Html.DevExpress().Label(
+             settings =>
+             {
+                 settings.ControlStyle.CssClass = "label";
+                 settings.Text = "PASS PDB Nr:";
+                 settings.AssociatedControlName = "PassPdbNr";
+             }).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+             settings =>
+             {
+
+                 settings.Name = "PassPdbNr";
+                 settings.Width = Unit.Percentage(100);
+                 settings.ControlStyle.CssClass = "editor";
+                 settings.ShowModelErrors = true;
+                 settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                 settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+                 settings.Properties.MaskSettings.Mask = "aa.aaa.aa.aa";
+             }).Bind(Model.PassPdbNr).GetHtml()
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Bezeichnung:";
+                settings.AssociatedControlName = "KZgBz";
+            }
+        ).GetHtml()
+        </td>
+        <td class="value" colspan="3">
+            @Html.DevExpress().TextBox(
+          settings =>
+          {
+              settings.Name = "Bezeichnung";
+              settings.Width = Unit.Percentage(100);
+              settings.ControlStyle.CssClass = "editor";
+              settings.ShowModelErrors = true;
+              settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+              settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+          }).Bind(Model.Bezeichnung).GetHtml()
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+           settings =>
+           {
+               settings.ControlStyle.CssClass = "label";
+               settings.Text = "Zg Datum:";
+               settings.AssociatedControlName = "Datensatz";
+           }
+       ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().DateEdit(
+          settings =>
+          {
+              settings.Name = "Datensatz";
+              settings.Properties.EditFormat = EditFormat.Date;
+              settings.Width = Unit.Pixel(200);
+              settings.ShowModelErrors = true;
+              settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+              settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+          }).Bind(Model.Datensatz).GetHtml()
+        </td>
+        <td class="label"></td>
+        <td class="value"></td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+              settings =>
+              {
+                  settings.ControlStyle.CssClass = "label";
+                  settings.Text = "Kundennr.:";
+                  settings.AssociatedControlName = "CustomerNumber";
+              }
+          ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().TextBox(
+            settings =>
+            {
+                settings.Name = "CustomerNumber";
+                settings.Width = Unit.Pixel(200);
+                settings.ControlStyle.CssClass = "editor";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+            }).Bind(Model.CustomerNumber).GetHtml()
+        </td>
+        <td class="label"></td>
+        <td class="value"></td>
+    </tr>
+
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+           settings =>
+           {
+               settings.ControlStyle.CssClass = "label";
+               settings.Text = "Datenformat:";
+               settings.AssociatedControlName = "Datenformat";
+           }
+       ).GetHtml()
+        </td>
+        <td class="value">
+            @Html.DevExpress().ComboBox(
+                       settings =>
+                       {
+                           settings.Name = "Datenformat";
+                           settings.Width = Unit.Pixel(200);
+                           settings.ControlStyle.CssClass = "editor";
+                           settings.ShowModelErrors = true;
+                           settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                           settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settings.Properties.TextField = "Name";
+                           settings.Properties.ValueField = "Name";
+                           settings.Properties.NullText = "type name to add";
+                       }).BindList(CommonHelper.GetDatenformatItems()).Bind(Model.Datenformat).GetHtml()
+        </td>
+        <td class="label"></td>
+        <td class="value"></td>
+    </tr>
+    <tr>
+        <td class="label">
+            @Html.DevExpress().Label(
+         settings =>
+         {
+             settings.ControlStyle.CssClass = "label";
+             settings.Text = "Bemerkung:";
+             settings.AssociatedControlName = "Bemerkung";
+         }
+     ).GetHtml()
+        </td>
+        <td class="value" colspan="3">
+            @Html.DevExpress().Memo(
+       settings =>
+       {
+           settings.Name = "Bemerkung";
+           settings.Width = Unit.Percentage(100);
+           settings.Height = Unit.Pixel(80);
+           settings.ControlStyle.CssClass = "editor";
+           settings.ShowModelErrors = true;
+           settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+           settings.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+       }).Bind(Model.Bemerkung).GetHtml()
+        </td>
+    </tr>
+</table>
+
+    @Html.DevExpress().Splitter(
+              settings =>
+              {
+                  settings.Name = "splResizing";
+                  settings.FullscreenMode = false;
+                  settings.Styles.Pane.Paddings.Padding = 0;
+                  settings.Style["margin-top"] = "15px";
+                  settings.Orientation = System.Web.UI.WebControls.Orientation.Horizontal;
+
+                  settings.Panes.Add(gridPane =>
+                  {
+                      gridPane.Name = "grid1Container";
+                      gridPane.Size = Unit.Percentage(30);
+                      gridPane.MinSize = 100;
+                      gridPane.ScrollBars = ScrollBars.Vertical;
+                      gridPane.SetContent(() =>
+                      {
+                          @Html.RenderPartial("~/Views/Form/Controls/BrowseForm2MainDataPassZuweisungZSBNrPartial.cshtml", Model);
+                      });
+                  });
+
+                  settings.Panes.Add(editorsPane =>
+                  {
+                      editorsPane.Name = "grid2Container";
+                      editorsPane.Size = Unit.Percentage(70);
+                      editorsPane.ShowCollapseForwardButton = DefaultBoolean.True;
+                      editorsPane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Vertical;
+                      editorsPane.SetContent(() =>
+                      {
+                          @Html.RenderPartial("~/Views/Form/Controls/BrowseForm2MainDataPassZgRevisionPartial.cshtml", Model);
+                      });
+                  });
+              }).GetHtml()
+}

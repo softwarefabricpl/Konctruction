@@ -1,0 +1,248 @@
+@model KundenTeileNrFormViewModel
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        RenderPageSize();
+    });
+
+    $(window).resize(function () {
+        RenderPageSize();
+    });
+
+    function RenderPageSize() {
+        var contentHeight = $(window).height() - 430;
+        splResizing.SetHeight(contentHeight);
+        splResizing2.SetHeight(contentHeight);
+    }
+
+    function PaneResized(s, e) {
+        RenderPageSize();
+    }
+
+    function viewBrowseForm2KundeZuweisungZSBNrOnBeginCallback(s, e) {
+
+    }
+
+    function DeleteKundeZgRevision(id) {
+        $.ajax({
+            url: "@Url.Action("DeleteKundeZgRevision", "Form")?" + $.param({
+                id: id,
+            }),
+            datatype: "JSON",
+            type: "Get",
+            success: function (result) {
+                viewBrowseForm2KundeZgRevision.PerformCallback();
+            }
+        });
+    }
+
+    function DeleteKundeZuweisungZSBNr(id) {
+          $.ajax({
+            url: "@Url.Action("DeleteKundeZuweisungZSBNr", "Form")?" + $.param({
+                id: id,
+            }),
+            datatype: "JSON",
+            type: "Get",
+            success: function (result) {
+                viewBrowseForm2KundeZuweisungZSBNr.PerformCallback();
+            }
+        });
+    }
+
+    function DeletePassKundeZuweisungZSBNr(id) {
+          $.ajax({
+            url: "@Url.Action("DeletePassKundeZuweisungZSBNr", "Form")?" + $.param({
+                id: id,
+            }),
+            datatype: "JSON",
+            type: "Get",
+            success: function (result) {
+                viewBrowseFormPassKundeZuweisungZSBNr.PerformCallback();
+            }
+        });
+    }
+    function viewBrowseFormPassKundeZuweisungZSBNrOnBeginCallback(s, e) {
+    }
+
+    function viewBrowseForm2KundeZuweisungZSBNrOnEndCallback(s, e) {
+    }
+
+    function viewBrowseFormPassKundeZuweisungZSBNrOnEndCallback(s, e) {
+    }
+
+    function viewBrowseForm1KundeZgRevisionOnBeginCallback(s, e) {
+    }
+
+    function viewBrowseForm1KundeZgRevisionOnEndCallback(s, e) {
+    }
+
+    function Takeover() {
+        var url = "@Url.Action("TakeoverForm1", "Form", new { ID = Model.ID })";
+        window.location.href = url;
+    }
+
+    var PassKundezuweisungZSBNrValue = null;
+
+    function Grid_BatchEditStartEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PassKundezuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+
+            PassKundezuweisungZSBNrValue = cellInfo.value;
+        
+        CbPassKundezuweisungZSBNr.PerformCallback()
+    }
+
+    function Grid_BatchEditEndEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PassKundezuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = CbPassKundezuweisungZSBNr.GetValue();
+        cellInfo.text = CbPassKundezuweisungZSBNr.GetText();
+        CbPassKundezuweisungZSBNr.SetValue(cellInfo.value); 
+        PassKundezuweisungZSBNrValue = cellInfo.value;
+    }
+
+    function CbPassKundezuweisungZSBNrBeginCallback(s, e) {
+        e.customArgs['ID'] = PassKundezuweisungZSBNrValue;
+    }
+
+
+    function CbPassKundezuweisungZSBNrEndCallback(s, e) {
+        if (CbPassKundezuweisungZSBNr.GetValue() == null && PassKundezuweisungZSBNrValue != null) {
+            CbPassKundezuweisungZSBNr.SetValue(PassKundezuweisungZSBNrValue);
+            CbPassKundezuweisungZSBNr.SetFocus();
+        }
+    }
+
+    function CbPassKundezuweisungZSBNrKeyPress(s, e) {
+        if (PassKundezuweisungZSBNrValue != null) {
+            PassKundezuweisungZSBNrValue = null;
+            CbPassKundezuweisungZSBNr.SetValue(null);
+        }
+    }
+
+    var KundezuweisungZSBNrValue = null;
+
+    function Grid_KundeBatchEditStartEditing(s, e) {
+        var templateColumn = s.GetColumnByField("KundezuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+
+        KundezuweisungZSBNrValue = cellInfo.value;
+
+        CbKundezuweisungZSBNr.PerformCallback()
+    }
+
+    function Grid_KundeBatchEditEndEditing(s, e) {
+        var templateColumn = s.GetColumnByField("KundezuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = CbKundezuweisungZSBNr.GetValue();
+        cellInfo.text = CbKundezuweisungZSBNr.GetText();
+        CbKundezuweisungZSBNr.SetValue(cellInfo.value);
+        KundezuweisungZSBNrValue = cellInfo.value;
+    }
+
+    function CbKundezuweisungZSBNrBeginCallback(s, e) {
+        e.customArgs['ID'] = KundezuweisungZSBNrValue;
+    }
+
+
+    function CbKundezuweisungZSBNrEndCallback(s, e) {
+        if (CbKundezuweisungZSBNr.GetValue() == null && KundezuweisungZSBNrValue != null) {
+            CbKundezuweisungZSBNr.SetValue(KundezuweisungZSBNrValue);
+            CbKundezuweisungZSBNr.SetFocus();
+        }
+    }
+
+    function CbKundezuweisungZSBNrKeyPress(s, e) {
+        if (KundezuweisungZSBNrValue != null) {
+            KundezuweisungZSBNrValue = null;
+            CbKundezuweisungZSBNr.SetValue(null);
+        }
+    }
+
+    function GoToKundenTeilNr(id) {
+        if (confirm('Bist du sicher?')) {
+            var url = "@Url.Action("BrowseSearchForm1", "Form")?" + $.param({
+                ID: id
+            });
+            window.location.href = url;
+        }
+    }
+
+</script>
+@using (Html.BeginForm("BrowseForm1", "Form", FormMethod.Post, new { id = "BrowseForm1Form", @class = "edit_form" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("AssignedOn", Model.AssignedOn)
+    @Html.Hidden("AssignedTo", Model.AssignedTo)
+    <table style="width: 98%;" align="center">
+        <tr>
+            <td>
+                @if (Model.UserInfo != null && Model.UserInfo.UserRole == UserRole.Full)
+                {
+                    Html.RenderPartial("BrowseForm1MainData");
+                }
+                else
+                {
+                    Html.RenderPartial("ViewBrowseForm1MainData");
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width: 50%;margin-top:15px;" align="right">
+                    <tr>
+                        <td style="width: 50%;">
+                            @if (Model.UserInfo != null && Model.UserInfo.UserRole == UserRole.Full && Model.AssignedOn.HasValue && Model.UserInfo.UserName.ToLower() == Model.AssignedTo.ToLower())
+                            {
+
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnUpdate";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Update";
+                                            settings.UseSubmitBehavior = false;
+                                            settings.ClientSideEvents.Click = "function(s,e){ PostData('BrowseForm1Form');}";
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                ).GetHtml();
+
+                            }
+                        </td>
+                        <td style="width: 50%;text-align:right;">
+                            @{
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnCancel";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Stornieren";
+                                            settings.ClientSideEvents.Click = "function(s, e){ document.location='" + DevExpressHelper.GetUrl(new { Controller = "Form", Action = "Form1Index" }) + "'; }";
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                    ).GetHtml();
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+
+
+@{
+    @Html.Partial("~/Views/Shared/Controls/DataSavingPanelPartial.cshtml")
+}

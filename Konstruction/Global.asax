@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="Konstruction.MvcApplication" Language="C#" %>

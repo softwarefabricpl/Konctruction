@@ -1,0 +1,65 @@
+@model Form2PassKundeZuweisungZsbNrData
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "viewFormPassKundeZuweisungZSBNr";
+        settings.KeyFieldName = "ID";
+        settings.CallbackRouteValues = new { Controller = "Form", Action = "Form1PassKundeZuweisungZSBNrPartial", SessionKey = Model.Key };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Form", Action = "Form1PassKundeZuweisungZSBNrSessionEdit", SessionKey = Model.Key };
+        CommonHelper.ApplyCommonBatchEditSettings(settings);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Action";
+            column.Caption = "Action";
+            column.Width = Unit.Pixel(30);
+            column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            column.Settings.AllowSort = DefaultBoolean.False;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (c.VisibleIndex < 0)
+                    return;
+
+                int id = (int)DataBinder.Eval(c.DataItem, "ID");
+
+                ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"if(confirm('Wollen Sie wirklich diesen Datensatz löschen?')){ DeletePassKundeZuweisungZSBNr(" + id + "); } else { return false;} \" \">");
+                ViewContext.Writer.Write("<i class=\"fa fa-times fa-1x\" aria-hidden=\"true\" title=\"Löschen\" ></i></a>");
+
+            });
+
+            column.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"viewFormPassKundeZuweisungZSBNr.AddNewRow();\" \">");
+                ViewContext.Writer.Write("<i class=\"fa fa-plus fa-1x\" aria-hidden=\"true\" title=\"Neu\"></i></a>");
+            });
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "PassKundezuweisungZSBNr";
+            col.Caption = "PASS Zg Nr";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            var comboBoxProperties = col.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.DataSource = CommonHelper.GetPassKundeZuweisungZSBNrItems();
+            comboBoxProperties.TextField = "Name";
+            comboBoxProperties.ValueField = "ID";
+            comboBoxProperties.NullDisplayText = "(not specified)";
+            col.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("~/Views/Form/Controls/PassKundezuweisungZSBNrComboboxPartial.cshtml");
+            });
+        });
+        settings.ClientSideEvents.BeginCallback = "viewFormPassKundeZuweisungZSBNrOnBeginCallback";
+        settings.ClientSideEvents.EndCallback = "viewFormPassKundeZuweisungZSBNrOnEndCallback";
+        settings.ClientSideEvents.BatchEditEndEditing = "Grid_BatchEditEndEditing";
+        settings.ClientSideEvents.BatchEditStartEditing = "Grid_BatchEditStartEditing";
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.Dynamic;//or Display.None
+        };
+    }).Bind(Model.PassKundeZuweisungZsbNrData).GetHtml()

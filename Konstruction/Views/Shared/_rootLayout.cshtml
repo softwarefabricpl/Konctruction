@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>@ViewBag.Title</title>
+
+
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    @Html.DevExpress().Panel(settings => {
+        settings.Name = "HeaderPane";
+        settings.FixedPosition = PanelFixedPosition.WindowTop;
+        settings.Collapsible = true;
+        settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 500;
+        settings.ControlStyle.CssClass = "headerPane";
+        settings.Styles.Panel.CssClass = "panel";
+        settings.Styles.ExpandedPanel.CssClass = "expandedPanel";
+        settings.Styles.ExpandBar.CssClass = "bar";
+        settings.SetContent(() => {
+            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Full);
+        });
+        settings.SetExpandBarTemplateContent((c) => {
+            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Title);
+        });
+    }).GetHtml()
+
+    <script type="text/javascript">
+        function updateHeaderMenuOrientation() {
+            if (!window.HeaderMenu) return;
+            var orientation = HeaderPane.IsExpandable() ? 'Vertical' : 'Horizontal';
+            if (orientation !== HeaderMenu.GetOrientation())
+                HeaderMenu.SetOrientation(orientation);
+        }
+        var collection = ASPxClientControl.GetControlCollection();
+        collection.ControlsInitialized.AddHandler(updateHeaderMenuOrientation);
+        collection.BrowserWindowResized.AddHandler(updateHeaderMenuOrientation);
+    </script>
+
+
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+  
+            @Html.DevExpress().Panel(settings =>
+       {
+           settings.Name = "BottomPanel";
+           settings.FixedPosition = PanelFixedPosition.WindowBottom;
+           settings.SettingsAdaptivity.HideAtWindowInnerHeight = 500 ; 
+           settings.SettingsAdaptivity.HideAtWindowInnerWidth = 400;
+           settings.SetContent(() =>
+           {
+               Html.RenderPartial("FooterPartialView");
+           });
+       }).GetHtml()
+        
+    
+    @*<div id="MainContent" class="page-main-content">
+            @RenderBody()
+            @Html.DevExpress().Panel(settings =>
+            {
+               settings.Name = "BottomPanel";
+               settings.FixedPosition = PanelFixedPosition.WindowBottom;
+               settings.SettingsAdaptivity.HideAtWindowInnerHeight = 250;
+               settings.SettingsAdaptivity.HideAtWindowInnerWidth = 400;
+               settings.SetContent(() =>
+               {
+                   Html.RenderPartial("FooterPartialView");
+               });
+            }).GetHtml()
+        </div>*@
+
+
+</body>
+</html>

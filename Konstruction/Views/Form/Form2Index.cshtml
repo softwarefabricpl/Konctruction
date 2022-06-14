@@ -1,0 +1,23 @@
+@model List<PassTeileNrViewModel>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        RenderPageSize();
+    });
+
+    $(window).resize(function () {
+        RenderPageSize();
+    });
+
+    function RenderPageSize() {
+        var contentHeight = $(window).height() - 145;
+        viewForm2Data.SetHeight(contentHeight);
+
+    }
+
+</script>
+@Html.Partial("Form2IndexPartialView", Model)
+
+@{
+    @Html.Partial("~/Views/Shared/Controls/DataLoadingPanelPartial.cshtml")
+}

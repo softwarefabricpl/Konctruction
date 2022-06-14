@@ -1,0 +1,22 @@
+@Html.DevExpress().ComboBox(
+settings =>
+{
+    settings.Name = "CbKundezuweisungZSBNr";
+    settings.Width = Unit.Percentage(100);
+    settings.ControlStyle.CssClass = "editor";
+    settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+    settings.CallbackRouteValues = new { Controller = "Form", Action = "KundezuweisungZSBNrComboboxPartial" };
+    settings.Properties.TextField = "k_zg_nr";
+    settings.Properties.ValueField = "ID";
+    settings.Properties.NullText = "Geben Sie hier den Namen ein";
+    settings.Properties.ValueType = typeof(int?);
+    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+    settings.ShowModelErrors = true;
+    settings.Properties.CallbackPageSize = 15;
+    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+    settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+    settings.Properties.ClientSideEvents.BeginCallback = "CbKundezuweisungZSBNrBeginCallback";
+    settings.Properties.ClientSideEvents.EndCallback = "CbKundezuweisungZSBNrEndCallback";
+    settings.Properties.ClientSideEvents.KeyPress = "CbKundezuweisungZSBNrKeyPress";
+}
+).BindList(CommonHelper.GetKundeZuweisungZSBNrItemsRange, CommonHelper.GetKundeZuweisungZSBNrItem).GetHtml() 

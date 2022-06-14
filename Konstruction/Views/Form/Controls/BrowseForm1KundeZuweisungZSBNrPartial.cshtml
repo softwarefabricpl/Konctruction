@@ -1,0 +1,83 @@
+@model KundeZuweisungZsbsNrViewModel
+@{
+    var ui = CommonHelper.GetUserInfo();
+    var afi = CommonHelper.Form1AssignedInfo(Model.Parent);
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "viewBrowseForm2KundeZuweisungZSBNr";
+        settings.KeyFieldName = "ID";
+        settings.CallbackRouteValues = new { Controller = "Form", Action = "BrowseForm1KundeZuweisungZSBNrPartial", Parent = Model.Parent };
+        if (ui != null && ui.UserRole == UserRole.Full && ui.UserName.ToLower() == afi.AssignedTo.ToLower())
+            CommonHelper.ApplyCommonBatchEditSettings(settings);
+        else
+            CommonHelper.ApplyCommonReadOnlySettings(settings);
+        if (ui != null && ui.UserRole == UserRole.Full && ui.UserName.ToLower() == afi.AssignedTo.ToLower())
+        {
+            settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Form", Action = "BrowseForm1KundeZuweisungZSBNrEdit", Parent = Model.Parent };
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "Action";
+                column.Caption = "Action";
+                column.Width = Unit.Pixel(30);
+                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+                column.Settings.AllowSort = DefaultBoolean.False;
+                column.EditFormSettings.Visible = DefaultBoolean.False;
+                column.SetDataItemTemplateContent(c =>
+                {
+                    if (c.VisibleIndex < 0)
+                        return;
+
+                    int id = (int)DataBinder.Eval(c.DataItem, "ID");
+
+                    ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"if(confirm('Wollen Sie wirklich diesen Datensatz löschen?')){ DeleteKundeZuweisungZSBNr(" + id + "); } else { return false;} \" \">");
+                    ViewContext.Writer.Write("<i class=\"fa fa-times fa-1x\" aria-hidden=\"true\" title=\"Löschen\" ></i></a>");
+
+                });
+
+                column.SetHeaderTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write("<a href=\"javascript:;\" onclick=\"viewBrowseForm2KundeZuweisungZSBNr.AddNewRow();\" \">");
+                    ViewContext.Writer.Write("<i class=\"fa fa-plus fa-1x\" aria-hidden=\"true\" title=\"Neu\"></i></a>");
+                });
+            });
+        }
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "KundezuweisungZSBNr";
+            col.Caption = "Kunde Unter - ZSB Nr";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            var comboBoxProperties = col.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.DataSource = CommonHelper.GetPassZuweisungZSBNrItems();
+            comboBoxProperties.TextField = "Name";
+            comboBoxProperties.ValueField = "ID";
+            comboBoxProperties.NullDisplayText = "(not specified)";
+            if (ui != null && ui.UserRole == UserRole.Full && ui.UserName.ToLower() == afi.AssignedTo.ToLower())
+            {
+                col.SetEditItemTemplateContent(c =>
+                {
+                    Html.RenderPartial("~/Views/Form/Controls/KundezuweisungZSBNrComboboxPartial.cshtml");
+                });
+            }
+        });
+
+        if (ui != null && ui.UserRole == UserRole.Full && ui.UserName.ToLower() == afi.AssignedTo.ToLower())
+        {
+            settings.ClientSideEvents.BeginCallback = "viewBrowseForm2KundeZuweisungZSBNrOnBeginCallback";
+            settings.ClientSideEvents.EndCallback = "viewBrowseForm2KundeZuweisungZSBNrOnEndCallback";
+            settings.ClientSideEvents.BatchEditEndEditing = "Grid_KundeBatchEditEndEditing";
+            settings.ClientSideEvents.BatchEditStartEditing = "Grid_KundeBatchEditStartEditing";
+            settings.CellEditorInitialize = (s, e) =>
+            {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;//or Display.None
+            };
+        }
+    }).Bind(Model.Source).GetHtml()

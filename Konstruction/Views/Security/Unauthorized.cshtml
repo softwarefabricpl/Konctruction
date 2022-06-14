@@ -1,0 +1,43 @@
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "UnauthorizedFormLayout";
+    var groupItem = settings.Items.AddGroupItem();
+    groupItem.Caption = "Unauthorized";
+
+    groupItem.Items.Add(i => i.SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table><tr>");
+
+        ViewContext.Writer.Write("<td style=\"width:55px;\">");
+        ViewContext.Writer.Write("<img src=\"" + Url.Content("~/Content/Images/Alerts/Unauthorized.png") + "\" />");
+
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().Label(
+           lbs =>
+           {
+               lbs.ControlStyle.CssClass = "label";
+               lbs.Text = "You do not have access to this page!";
+               lbs.ControlStyle.ForeColor = System.Drawing.Color.Red;
+               lbs.ControlStyle.Font.Size = FontUnit.XLarge;
+           }).GetHtml();
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("</tr></table>");
+
+
+    })).ShowCaption = DefaultBoolean.False;
+
+    groupItem.Paddings.PaddingTop = 0;
+    groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+    groupItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+    groupItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Left;
+    groupItem.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+    groupItem.SettingsItemCaptions.VerticalAlign = FormLayoutVerticalAlign.Top;
+    groupItem.SettingsItemHelpTexts.Position = HelpTextPosition.Auto;
+    groupItem.SettingsItemHelpTexts.HorizontalAlign = HelpTextHorizontalAlign.Auto;
+    groupItem.SettingsItemHelpTexts.VerticalAlign = HelpTextVerticalAlign.Auto;
+}).GetHtml()

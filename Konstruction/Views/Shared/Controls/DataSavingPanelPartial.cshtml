@@ -1,0 +1,19 @@
+﻿<script type="text/javascript">
+    var btnPostClicked = false;
+    function PostData(form) {
+        if (!btnPostClicked) {
+            btnPostClicked = true;
+            SavingPanel.Show();
+            $('#' + form).submit();
+        }
+    }
+</script>
+
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "SavingPanel";
+        settings.Modal = true;
+        settings.Text = "Saving...";
+    }
+).GetHtml()

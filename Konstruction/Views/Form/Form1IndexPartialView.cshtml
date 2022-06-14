@@ -1,0 +1,101 @@
+@model List<KundenTeileNrViewModel>
+ @{ 
+     var ui = CommonHelper.GetUserInfo();
+ }
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "viewForm1Data";
+        settings.KeyFieldName = "ID";
+        settings.CallbackRouteValues = new { Controller = "Form", Action = "Form1IndexPartialView" };
+
+        CommonHelper.ApplyCommonSettings(settings);
+
+        settings.Columns.Add(column =>
+        {
+            CommonHelper.ApplyCommandColumnCommonSettings(ViewContext, settings, column, Unit.Pixel(40));
+
+            column.SetDataItemTemplateContent(c =>
+            {
+                int? id = (int?)DataBinder.Eval(c.DataItem, "ID");
+                if (id.HasValue)
+                {
+                    ViewContext.Writer.Write("<a onclick=\"LoadingPanel.Show();\" href=\"" + DevExpressHelper.GetUrl(new { Controller = "Form", Action = "BrowseForm1" }) + "/" + id + "\">");
+                    ViewContext.Writer.Write("<i class=\"fa fa-eye fa-1x\" aria-hidden=\"true\" title=\"Ansicht\"></i></a>");
+                }
+            });
+
+            if (ui != null && (ui.UserRole == UserRole.Full || ui.UserRole == UserRole.Create))
+            {
+                column.SetHeaderTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write("<a onclick=\"LoadingPanel.Show();\" href=\"" + DevExpressHelper.GetUrl(new { Controller = "Form", Action = "NewForm1Session" }) + "\"\" \">");
+                    ViewContext.Writer.Write("<i class=\"fa fa-plus fa-1x\" aria-hidden=\"true\"  title=\"Neu\" ></i></a>");
+                });
+            }
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "KZgNr";
+            column.Caption = "Kunden Zg Nr";
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            column.Width = Unit.Pixel(110);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "PassPdbNr";
+            column.Caption = "PASS PDB Nr";
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            column.Width = Unit.Pixel(110);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "KZgBz";
+            column.Caption = "Bezeichnung";
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            column.Width = Unit.Pixel(210);
+            column.CellStyle.CssClass = "cell-wrap-text";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            CommonHelper.ApplyDateCommonSettings(column, 125);
+
+            column.FieldName = "KZgDate";
+            column.Caption = "Zg Datum";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Datenformat";
+            column.Caption = "Datenformat";
+            column.Width = Unit.Pixel(100);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Pdastand";
+            column.Caption = "Daten Stand";
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            column.Width = Unit.Pixel(100);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Ersteller";
+            column.Caption = "Kunde";
+            column.Width = Unit.Pixel(100);
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ZgMemo";
+            column.Caption = "Bemerkung";
+            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+            column.CellStyle.CssClass = "cell-wrap-text";
+            column.ColumnType = MVCxGridViewColumnType.Memo;
+            MemoProperties properties = column.PropertiesEdit as MemoProperties;
+        });
+
+    }).Bind(Model).GetHtml()

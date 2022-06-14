@@ -1,0 +1,91 @@
+@{
+    string exd = string.Empty;
+    if (Session["InvalidOperationException"] != null)
+    {
+        Exception ex = (Exception)Session["InvalidOperationException"];
+        if (ex != null)
+        {
+            exd = ex.ToString();
+        }
+    }
+}
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "InvalidOperationFormLayout";
+    var groupItem = settings.Items.AddGroupItem();
+    groupItem.Caption = "Invalid Operation";
+
+    groupItem.Items.Add(i => i.SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table><tr>");
+
+        ViewContext.Writer.Write("<td style=\"width:55px;\">");
+        ViewContext.Writer.Write("<img src=\""+ Url.Content("~/Content/Images/Alerts/InvalidOperation.png") + "\" />");
+
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().Label(
+           lbs =>
+           {
+               lbs.ControlStyle.CssClass = "label";
+               lbs.Text = "An invalid operation has been detected. Please contact system administrator for support!";
+               lbs.ControlStyle.ForeColor = System.Drawing.Color.Red;
+               lbs.ControlStyle.Font.Size = FontUnit.XLarge;
+           }).GetHtml();
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("</tr></table>");
+
+
+    })).ShowCaption = DefaultBoolean.False;
+
+    groupItem.Paddings.PaddingTop = 0;
+    groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+    groupItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+    groupItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Left;
+    groupItem.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+    groupItem.SettingsItemCaptions.VerticalAlign = FormLayoutVerticalAlign.Top;
+    groupItem.SettingsItemHelpTexts.Position = HelpTextPosition.Auto;
+    groupItem.SettingsItemHelpTexts.HorizontalAlign = HelpTextHorizontalAlign.Auto;
+    groupItem.SettingsItemHelpTexts.VerticalAlign = HelpTextVerticalAlign.Auto;
+}).GetHtml()
+
+@if (!string.IsNullOrEmpty(exd))
+{
+    @Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "InvalidOperationExceptionDetailsFormLayout";
+    settings.EncodeHtml = false;
+    settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth =  800;
+    settings.ControlStyle.CssClass = "formLayout";
+    var groupItem2 = settings.Items.AddGroupItem();
+    groupItem2.Caption = "Details";
+
+    groupItem2.Items.Add(i => i.NestedExtension().Memo(s =>
+    {
+        s.Name = "InvalidOperationDetails";
+        s.Width = Unit.Percentage(100);
+        s.Height = Unit.Pixel(250);
+        s.ShowModelErrors = true;
+        s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        s.Properties.ValidationSettings.Display = CommonHelper.DefaultEditorErrorDisplayMode;
+        s.Text = exd;
+        s.ReadOnly = true;
+        s.Properties.ReadOnlyStyle.CssClass = "readonly";
+    }));
+
+    groupItem2.ColSpan = 1;
+    groupItem2.Paddings.PaddingTop = 0;
+    groupItem2.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+    groupItem2.SettingsItems.ShowCaption = DefaultBoolean.False;
+    groupItem2.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+    groupItem2.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+    groupItem2.SettingsItemCaptions.VerticalAlign = FormLayoutVerticalAlign.Top;
+    groupItem2.SettingsItemHelpTexts.Position = HelpTextPosition.Auto;
+    groupItem2.SettingsItemHelpTexts.HorizontalAlign = HelpTextHorizontalAlign.Auto;
+    groupItem2.SettingsItemHelpTexts.VerticalAlign = HelpTextVerticalAlign.Auto;
+}).GetHtml()
+}

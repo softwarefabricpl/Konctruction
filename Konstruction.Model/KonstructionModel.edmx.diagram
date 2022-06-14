@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="03157e9244fc40068a3d2ce26c9ae6d1" Name="Diagram1">
+        <EntityTypeShape EntityType="KonstructionModel.ActiveDirectorySetting" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Datenformat" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Einfügefehler" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Ersteller" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Kunde_zg_revision" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Kunde_zuweisung_ZSB_Nr" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Kunden_Teile_nr" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Last_Pass_Teile_nr" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Pass_Kunde_zuweisung_ZSB_Nr" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Pass_Teile_nr" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Pass_zg_revision" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="KonstructionModel.Pass_zuweisung_ZSB_Nr" Width="1.5" PointX="8.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

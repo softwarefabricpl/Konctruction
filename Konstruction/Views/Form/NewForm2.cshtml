@@ -1,0 +1,150 @@
+@model PassTeileNrFormViewModel
+@{
+    var ui = CommonHelper.GetUserInfo();
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var contentHeight = $(window).height() - 440;
+        splResizing.SetHeight(contentHeight);
+    });
+
+    $(window).resize(function () {
+        var contentHeight = $(window).height() - 440;
+        splResizing.SetHeight(contentHeight);
+    });
+
+
+    var oid = null;
+    function DeletePassZuweisungZSBNr(id) {
+        oid = id;
+        viewForm2PassZuweisungZSBNr.PerformCallback();
+    }
+
+    function viewForm2PassZuweisungZSBNrOnBeginCallback(s, e) {
+        e.customArgs['oid'] = oid;
+    }
+
+    function DeletePassZgRevision(id) {
+        oid = id;
+        viewForm2PassZgRevision.PerformCallback();
+    }
+
+    function viewForm2PassZgRevisionOnBeginCallback(s, e) {
+        e.customArgs['oid'] = oid;
+    }
+
+    function viewForm2PassZgRevisionOnEndCallback(s, e) {
+        oid = null;
+    }
+    function viewForm2PassZuweisungZSBNrOnEndCallback(s, e) {
+        oid = null;
+    }
+
+    var PasszuweisungZSBNrValue = null;
+
+    function Grid_PassZuweisungZSBNrBatchEditStartEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PasszuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+
+        PasszuweisungZSBNrValue = cellInfo.value;
+
+        CbPasszuweisungZSBNr.PerformCallback()
+    }
+
+    function Grid_PassZuweisungZSBNrBatchEditEndEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PasszuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = CbPasszuweisungZSBNr.GetValue();
+        cellInfo.text = CbPasszuweisungZSBNr.GetText();
+        CbPasszuweisungZSBNr.SetValue(cellInfo.value);
+        PasszuweisungZSBNrValue = cellInfo.value;
+    }
+
+    function CbPasszuweisungZSBNrBeginCallback(s, e) {
+        e.customArgs['ID'] = PasszuweisungZSBNrValue;
+    }
+
+
+    function CbPasszuweisungZSBNrEndCallback(s, e) {
+        if (CbPasszuweisungZSBNr.GetValue() == null && PasszuweisungZSBNrValue != null) {
+            CbPasszuweisungZSBNr.SetValue(PasszuweisungZSBNrValue);
+            CbPasszuweisungZSBNr.SetFocus();
+        }
+    }
+
+    function CbPasszuweisungZSBNrKeyPress(s, e) {
+        if (PasszuweisungZSBNrValue != null) {
+            PasszuweisungZSBNrValue = null;
+            CbPasszuweisungZSBNr.SetValue(null);
+        }
+    }
+</script>
+@using (Html.BeginForm("NewForm2", "Form", FormMethod.Post, new { id = "NewForm2Form", @class = "edit_form" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("SessionKey", Model.SessionKey)
+    <table style="width: 98%;" align="center">
+        <tr>
+            <td>
+                @{
+                    Html.RenderPartial("NewForm2MainData");
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width: 50%;margin-top:15px;" align="right">
+                    <tr>
+                        <td style="width: 50%;">
+                            @{
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnUpdate";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Speichern";
+                                            settings.UseSubmitBehavior = false;
+                                            if (ui != null && ui.UserRole == UserRole.Full)
+                                            {
+                                                settings.ClientSideEvents.Click = "function(s,e){ PostData('NewForm2Form');}";
+                                            }
+                                            else
+                                            {
+                                                settings.ClientSideEvents.Click = "function(s,e){ if (confirm('Sind Sie sicher?')) { PostData('NewForm2Form'); } else return false;}";
+                                            }
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                ).GetHtml();
+                            }
+                        </td>
+                        <td style="width: 50%;text-align:right;">
+                            @{
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnCancel";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Stornieren";
+                                            settings.ClientSideEvents.Click = "function(s, e){ document.location='" + DevExpressHelper.GetUrl(new { Controller = "Form", Action = "Form2Index" }) + "'; }";
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                    ).GetHtml();
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+
+@{
+    @Html.Partial("~/Views/Shared/Controls/DataSavingPanelPartial.cshtml")
+}

@@ -1,0 +1,23 @@
+@model List<KundenTeileNrViewModel>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        RenderPageSize();
+    });
+
+    $(window).resize(function () {
+        RenderPageSize();
+    });
+
+    function RenderPageSize() {
+        var contentHeight = $(window).height() - 145;
+        viewForm1Data.SetHeight(contentHeight);
+
+    }
+
+</script>
+@Html.Partial("Form1IndexPartialView", Model)
+
+@{
+    @Html.Partial("~/Views/Shared/Controls/DataLoadingPanelPartial.cshtml")
+}

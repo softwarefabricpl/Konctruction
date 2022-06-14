@@ -1,0 +1,23 @@
+@model PassTeileNrFormViewModel
+<table style="width:100%;">
+    <tr>
+        <td style="text-align:center;height:25px;background-color:#D3E4F6;border-bottom:1px solid #8BA0BC;">
+
+            @Html.DevExpress().Label(
+            settings =>
+            {
+                settings.ControlStyle.CssClass = "label";
+                settings.Text = "Zuweisung Unter - ZSB Pass Nr";
+                settings.ControlStyle.Font.Bold = true;
+                settings.ControlStyle.Font.Size = FontUnit.Small;
+            }).GetHtml()
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{
+                Html.RenderPartial("~/Views/Form/Controls/BrowseForm2PassZuweisungZSBNrPartial.cshtml", FormHelper.GetPassZuweisungZsbNrItems(Model.ID));
+            }
+        </td>
+    </tr>
+</table>

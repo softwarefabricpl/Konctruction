@@ -1,0 +1,180 @@
+@model PassTeileNrFormViewModel
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var contentHeight = $(window).height() - 440;
+        splResizing.SetHeight(contentHeight);
+    });
+
+    $(window).resize(function () {
+        var contentHeight = $(window).height() - 440;
+        splResizing.SetHeight(contentHeight);
+    });
+
+    function DeletePassZuweisungZSBNr(id) {
+        viewForm2PassZuweisungZSBNr.PerformCallback();
+    }
+
+    function viewBrowseForm2PassZuweisungZSBNrOnBeginCallback(s, e) {
+    }
+
+    function DeletePassZgRevision(id) {
+        viewForm2PassZgRevision.PerformCallback();
+    }
+
+    function viewBrowseForm2PassZgRevisionOnBeginCallback(s, e) {
+    }
+
+    function viewBrowseForm2PassZgRevisionOnEndCallback(s, e) {
+    }
+    function viewBrowseForm2PassZuweisungZSBNrOnEndCallback(s, e) {
+    }
+
+    function DeletePassZgRevision(id,ut) {
+        $.ajax({
+            url: "@Url.Action("DeletePassZgRevision", "Form")?" + $.param({
+                id: id,
+            }),
+            datatype: "JSON",
+            type: "Get",
+            success: function (result)
+            {
+                viewBrowseForm2PassZgRevision.PerformCallback();
+            }
+        });
+    }
+
+    function DeletePassZuweisungZSBNr(id,ut) {
+        $.ajax({
+            url: "@Url.Action("DeletePassZuweisungZSBNr", "Form")?" + $.param({
+                id: id
+            }),
+            datatype: "JSON",
+            type: "Get",
+            success: function (result) {
+                viewBrowseForm2PassZuweisungZSBNr.PerformCallback();
+            }
+        });
+    }
+
+    function Takeover() {
+        var url = "@Url.Action("TakeoverForm2", "Form", new { ID = Model.ID })";
+        window.location.href = url;
+    }
+
+    var PasszuweisungZSBNrValue = null;
+
+    function Grid_PassZuweisungZSBNrBatchEditStartEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PasszuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+
+        PasszuweisungZSBNrValue = cellInfo.value;
+
+        CbPasszuweisungZSBNr.PerformCallback()
+    }
+
+    function Grid_PassZuweisungZSBNrBatchEditEndEditing(s, e) {
+        var templateColumn = s.GetColumnByField("PasszuweisungZSBNr");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = CbPasszuweisungZSBNr.GetValue();
+        cellInfo.text = CbPasszuweisungZSBNr.GetText();
+        CbPasszuweisungZSBNr.SetValue(cellInfo.value);
+        PasszuweisungZSBNrValue = cellInfo.value;
+    }
+
+    function CbPasszuweisungZSBNrBeginCallback(s, e) {
+        e.customArgs['ID'] = PasszuweisungZSBNrValue;
+    }
+
+
+    function CbPasszuweisungZSBNrEndCallback(s, e) {
+        if (CbPasszuweisungZSBNr.GetValue() == null && PasszuweisungZSBNrValue != null) {
+            CbPasszuweisungZSBNr.SetValue(PasszuweisungZSBNrValue);
+            CbPasszuweisungZSBNr.SetFocus();
+        }
+    }
+
+    function CbPasszuweisungZSBNrKeyPress(s, e) {
+        if (PasszuweisungZSBNrValue != null) {
+            PasszuweisungZSBNrValue = null;
+            CbPasszuweisungZSBNr.SetValue(null);
+        }
+    }
+
+    function GoToPassTeileNr(id) {
+        if (confirm('Bist du sicher?')) {
+            var url = "@Url.Action("BrowseSearchForm2", "Form")?" + $.param({
+                ID: id
+            });
+            window.location.href = url;
+        }
+    }
+</script>
+@using (Html.BeginForm("BrowseForm2", "Form", FormMethod.Post, new { id = "BrowseForm2Form", @class = "edit_form" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("AssignedOn", Model.AssignedOn)
+    @Html.Hidden("AssignedTo", Model.AssignedTo)
+    <table style="width: 98%;" align="center">
+        <tr>
+            <td>
+                @if (Model.UserInfo != null && Model.UserInfo.UserRole == UserRole.Full)
+                {
+                    Html.RenderPartial("BrowseForm2MainData");
+                }
+                else
+                {
+                    Html.RenderPartial("ViewBrowseForm2MainData");
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width: 50%;margin-top:15px;" align="right">
+                    <tr>
+                        <td style="width: 50%;">
+                            @if (Model.UserInfo != null && Model.UserInfo.UserRole == UserRole.Full)
+                            {
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnUpdate";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Update";
+                                            settings.UseSubmitBehavior = false;
+                                            settings.ClientSideEvents.Click = "function(s,e){ PostData('BrowseForm2Form');}";
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                ).GetHtml();
+                            }
+                        </td>
+                        <td style="width: 50%;text-align:right;">
+                            @{
+                                Html.DevExpress().Button(
+                                        settings =>
+                                        {
+                                            settings.Name = "btnCancel";
+                                            settings.ControlStyle.CssClass = "button";
+                                            settings.Text = "Stornieren";
+                                            settings.ClientSideEvents.Click = "function(s, e){ document.location='" + DevExpressHelper.GetUrl(new { Controller = "Form", Action = "Form2Index" }) + "'; }";
+                                            settings.Width = Unit.Percentage(99);
+                                        }
+                                    ).GetHtml();
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+
+@{
+    @Html.Partial("~/Views/Shared/Controls/DataSavingPanelPartial.cshtml")
+}

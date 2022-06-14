@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{700D7354-6F44-4F4C-AB21-C52CC61726B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Konstruction.Model</RootNamespace>
+    <AssemblyName>Konstruction.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActiveDirectorySetting.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class\Form2KundeZgRevisioNrData.cs" />
+    <Compile Include="Class\Form1PassZgRevisioNrData.cs" />
+    <Compile Include="Class\Form2PassKundeZuweisungZsbNrData.cs" />
+    <Compile Include="Class\Form2KundeZuweisungZsbNrData.cs" />
+    <Compile Include="Class\Form1PassZuweisungZsbNrData.cs" />
+    <Compile Include="Class\FormAssignedInfo.cs" />
+    <Compile Include="Class\UserInfo.cs" />
+    <Compile Include="Datenformat.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Einfügefehler.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ersteller.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\GetDataHelper.cs" />
+    <Compile Include="KonstructionModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KonstructionModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KonstructionModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KonstructionModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KonstructionModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="KonstructionProxy.cs" />
+    <Compile Include="Kunden_Teile_nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kunde_zg_revision.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kunde_zuweisung_ZSB_Nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Last_Pass_Teile_nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComboBoxViewModel.cs" />
+    <Compile Include="Models\KundenTeileNrFormViewModel.cs" />
+    <Compile Include="Models\KundenTeileNrViewModel.cs" />
+    <Compile Include="Models\KundeZuweisungZsbNrsViewModel.cs" />
+    <Compile Include="Models\PassKundeZuweisungZsbNrsViewModel.cs" />
+    <Compile Include="Models\PassKundeZuweisungZsbNrViewModel.cs" />
+    <Compile Include="Models\KuneZgRevisionViewModel.cs" />
+    <Compile Include="Models\KundeZgRevisionsViewModel.cs" />
+    <Compile Include="Models\PassZgRevisionsViewModel.cs" />
+    <Compile Include="Models\PassZgRevisionViewModel.cs" />
+    <Compile Include="Models\PassZuweisungZsbNrsViewModel.cs" />
+    <Compile Include="Models\PassZuweisungZsbNrViewModel.cs" />
+    <Compile Include="Models\PassTeileNrViewModel.cs" />
+    <Compile Include="Models\PassTeileNrFormViewModel.cs" />
+    <Compile Include="Models\KundeZuweisungZsbNrViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Pass_Kunde_zuweisung_ZSB_Nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pass_Teile_nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pass_zg_revision.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pass_zuweisung_ZSB_Nr.cs">
+      <DependentUpon>KonstructionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="KonstructionModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KonstructionModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="KonstructionModel.edmx.diagram">
+      <DependentUpon>KonstructionModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KonstructionModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KonstructionModel.edmx</DependentUpon>
+      <LastGenOutput>KonstructionModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="KonstructionModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KonstructionModel.edmx</DependentUpon>
+      <LastGenOutput>KonstructionModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+</Project>

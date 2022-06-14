@@ -1,0 +1,34 @@
+@model HeaderViewRenderMode
+
+@if (Model == HeaderViewRenderMode.Title)
+{
+<div class="templateTitle">
+    <img src="~/Content/Images/pass-logo.png" width="130" height="35" style="padding-right:10px;"/>
+    @Html.ActionLink("Konstruktions", "Index", "Home")
+</div>
+}
+else
+{
+    if (Model == HeaderViewRenderMode.Full)
+    {
+        <div class="headerTop">
+            <div class="templateTitle">
+                <img src="~/Content/Images/pass-logo.png" width="120" height="35"  style="padding-right:15px;vertical-align:text-bottom;"/>
+                @Html.Label("Konstruktions-DB",new { style = "color:#024189;font-size: x-large" })
+            </div>
+            <div class="loginControl">
+                @Html.Partial("LogOnPartialView")
+            </div>
+        </div>
+    }
+
+    <div class="headerMenu">
+        @* DXCOMMENT: Configure the header menu *@
+        @Html.DevExpress().Menu(settings => {
+            settings.Name = "HeaderMenu";
+            settings.ItemAutoWidth = false;
+            settings.ControlStyle.CssClass = "headerMenu";
+            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        }).BindToXML(HttpContext.Current.Server.MapPath("~/App_Data/TopMenu.xml"), "/menu/*").GetHtml()
+    </div>
+}
